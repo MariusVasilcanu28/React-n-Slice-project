@@ -19,31 +19,26 @@ React 'n' Slice is an innovative pizza ordering application built with React. It
 
 React 'n' Slice is designed to offer users a simple yet engaging way to browse a menu of delicious pizzas, customize their orders, and quickly place them—all without requiring a full user account system. The app demonstrates modern React development with state management using Redux, routing with React Router, and utility-first styling via Tailwind CSS.
 
-> **Note:**  
-> - The payment process is entirely fictive; no actual payment processing occurs.  
-> - The app currently features a simulated login for demonstration purposes, with plans to integrate a full authentication system in the future.  
-> - It leverages a real API for data, though it operates within the constraints of a free tier. Please note that the web service hosting the API may go into hibernation if it doesn’t receive inbound traffic for 15 minutes, so allow a few seconds when making HTTP requests (GET, POST, DELETE) to let it wake up.
+> **Note:**
+>
+> - The payment process is entirely fictive; no actual payment processing occurs.
+> - The app currently features a simulated login for demonstration purposes, with plans to integrate a full authentication system in the future.
 
 ---
 
 ## Key Features
 
-- **Interactive Menu Display:**  
+- **Interactive Menu Display:**
   - Browse a curated list of pizzas with detailed descriptions and images.
-  
-- **Dynamic Cart Management:**  
+- **Dynamic Cart Management:**
   - Add, update, and remove pizzas from your cart with real-time state updates powered by Redux.
-  
-- **Order Placement Flow:**  
+- **Order Placement Flow:**
   - A fictive order placement process that simulates collecting user details and finalizing an order.
-  
-- **Simulated Authentication:**  
+- **Simulated Authentication:**
   - Experience a demo login flow, setting the stage for future full-featured authentication.
-  
-- **Client-Side Routing:**  
+- **Client-Side Routing:**
   - Seamless navigation using React Router.
-  
-- **Responsive Design:**  
+- **Responsive Design:**
   - Built with Tailwind CSS to ensure a polished look on desktops, tablets, and mobile devices.
 
 ---
