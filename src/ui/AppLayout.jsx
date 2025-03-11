@@ -42,9 +42,9 @@ function AppLayout() {
 
       {showOrderHistoryButton && username && (
         <div
-          className={`absolute right-10 ${!totalCartQuantity ? "bottom-10" : "bottom-20"}`}
+          className={`sm:absolute sm:right-10 ${!totalCartQuantity ? "sm:bottom-10" : "sm:bottom-20"}`}
         >
-          <Button to="/orders" type="small">
+          <Button to="/orders" type="full">
             Order History
           </Button>
         </div>
