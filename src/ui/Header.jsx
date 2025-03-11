@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "./Button";
 import { logOut } from "../features/user/userSlice";
 import { clearOrders } from "../features/order/orderSlice";
+import { clearCart } from "../features/cart/cartSlice";
 
 function Header() {
   const { username } = useSelector((state) => state.user);
@@ -21,6 +22,7 @@ function Header() {
   const handleLogout = () => {
     dispatch(logOut());
     dispatch(clearOrders());
+    dispatch(clearCart());
   };
 
   return (
