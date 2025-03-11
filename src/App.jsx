@@ -10,6 +10,7 @@ import CreateOrder, {
 import Order, { loader as orderLoader } from "./features/order/Order";
 import { action as updateOrderAction } from "./features/order/UpdateOrder";
 import AppLayout from "./ui/AppLayout";
+import OrderHistory from "./features/order/OrderHistory";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
         errorElement: <Error />,
         action: updateOrderAction,
       },
+      { path: "/orders", element: <OrderHistory /> },
     ],
     future: {
       v7_fetcherPersist: true,

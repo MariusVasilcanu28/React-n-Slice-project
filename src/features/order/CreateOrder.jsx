@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
@@ -8,38 +7,16 @@ import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
 import store from "../../store";
 import { formatCurrency } from "../../utils/helpers";
 import { fetchAddress } from "../user/userSlice";
+import { addOrder, getCurrentPriority, setCurrentPriority } from "./orderSlice";
 
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
     str,
   );
 
-const fakeCart = [
-  {
-    pizzaId: 12,
-    name: "Mediterranean",
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: "Vegetale",
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: "Spinach and Mushroom",
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
-
 function CreateOrder() {
-  const [withPriority, setWithPriority] = useState(false);
+  const withPriority = useSelector(getCurrentPriority);
+  const dispatch = useDispatch();
 
   const {
     username,
@@ -50,12 +27,9 @@ function CreateOrder() {
   } = useSelector((state) => state.user);
 
   const isLoadingAddress = addressStatus === "loading";
-
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   const formErrors = useActionData();
-
-  const dispatch = useDispatch();
 
   const cart = useSelector(getCart);
   const totalCartPrice = useSelector(getTotalCartPrice);
@@ -67,7 +41,6 @@ function CreateOrder() {
   return (
     <div className="px-4 py-6">
       <h2 className="mb-8 text-xl font-semibold">Ready to order? Let's go!</h2>
-
       <Form method="POST">
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label className="sm:basis-40">First Name</label>
@@ -112,9 +85,8 @@ function CreateOrder() {
               required
             />
           </div>
-
           {!position.latitude && !position.longitude && (
-            <span className="sm: absolute bottom-[3px] right-[3px] z-50 sm:bottom-[5px] sm:right-[5px]">
+            <span className="absolute bottom-[3px] right-[3px] z-50 sm:bottom-[5px] sm:right-[5px]">
               <Button
                 disabled={isLoadingAddress}
                 type="small"
@@ -129,18 +101,21 @@ function CreateOrder() {
           )}
         </div>
 
-        <div className="align-center mb-12 flex gap-5">
-          <input
-            type="checkbox"
-            name="priority"
-            id="priority"
-            className="h-6 w-6 accent-yellow-400 outline-none"
-            value={withPriority}
-            onChange={(e) => setWithPriority(e.target.checked)}
-          />
-          <label htmlFor="priority" className="font-medium">
-            Want to give your order priority?
-          </label>
+        <div className="align-center mb-12 flex flex-col gap-5 sm:flex-row sm:items-center">
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              name="priorityToggle"
+              id="priority"
+              className="h-6 w-6 accent-yellow-400 outline-none"
+              checked={withPriority}
+              onChange={(e) => dispatch(setCurrentPriority(e.target.checked))}
+            />
+            <label htmlFor="priority" className="font-medium">
+              Want to give your order priority?
+            </label>
+          </div>
+          <input type="hidden" name="priority" value={withPriority} />
         </div>
 
         <div>
@@ -173,9 +148,9 @@ export async function action({ request }) {
     ...data,
     cart: JSON.parse(data.cart),
     priority: data.priority === "true",
+    status: "ongoing",
   };
 
-  // Form error handling
   const errors = {};
   if (!isValidPhone(order.phone))
     errors.phone =
@@ -184,6 +159,7 @@ export async function action({ request }) {
 
   const newOrder = await createOrder(order);
 
+  store.dispatch(addOrder(newOrder));
   store.dispatch(clearCart());
 
   return redirect(`/order/${newOrder.id}`);

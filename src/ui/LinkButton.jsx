@@ -5,6 +5,7 @@ function LinkButton({ children, to }) {
 
   const className =
     "text-sm text-blue-500 hover:text-blue-600 hover:underline mt-2";
+
   if (to === "-1")
     return (
       <button className={className} onClick={() => navigate(-1)}>

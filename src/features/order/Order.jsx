@@ -1,7 +1,5 @@
 import { useFetcher, useLoaderData } from "react-router-dom";
-import { getOrder } from "../../services/apiRestaurant";
 import OrderItem from "./OrderItem";
-
 import {
   calcMinutesLeft,
   formatCurrency,
@@ -9,10 +7,10 @@ import {
 } from "../../utils/helpers";
 import { useEffect } from "react";
 import UpdateOrder from "./UpdateOrder";
+import { getOrder } from "../../services/apiRestaurant";
 
 function Order() {
   const order = useLoaderData();
-
   const fetcher = useFetcher();
 
   useEffect(() => {
@@ -34,7 +32,6 @@ function Order() {
     <div className="space-y-8 px-4 py-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-xl font-semibold">Order #{id} status</h2>
-
         <div className="space-x-2">
           {priority && (
             <span className="tracking rounded-full bg-red-500 px-3 py-1 text-sm font-semibold uppercase text-red-50">
