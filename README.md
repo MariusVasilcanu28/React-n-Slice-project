@@ -10,9 +10,6 @@ React 'n' Slice is an innovative pizza ordering application built with React. It
 2. [Key Features](#key-features)
 3. [Order Management](#order-management)
 4. [Technology Stack](#technology-stack)
-5. [Getting Started](#getting-started)
-6. [Deployment](#deployment)
-7. [License](#license)
 
 ---
 
